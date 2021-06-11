@@ -1,17 +1,12 @@
-package br.com.alura.forum.modelo;
+package br.com.vitu.forum.modelo;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,28 +14,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Topico {
+public class Resposta {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String titulo;
 	private String mensagem;
+	@ManyToOne
+	private Topico topico;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
-	
-	@Enumerated(EnumType.STRING)
-	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
 	@ManyToOne
 	private Usuario autor;
-	@ManyToOne
-	private Curso curso;
-	@OneToMany(mappedBy = "topico")
-	private List<Resposta> respostas = new ArrayList<>();
-
-	public Topico(String titulo, String mensagem, Curso curso) {
-		this.titulo = titulo;
-		this.mensagem = mensagem;
-		this.curso = curso;
-	}
+	private Boolean solucao = false;
 
 	@Override
 	public int hashCode() {
@@ -58,7 +42,7 @@ public class Topico {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Topico other = (Topico) obj;
+		Resposta other = (Resposta) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
