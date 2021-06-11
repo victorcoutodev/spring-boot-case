@@ -11,14 +11,14 @@ import lombok.Getter;
 public class TopicoDto {
 	
 	private Long id;
-	private String mensagem;
 	private String titulo;
+	private String mensagem;
 	private LocalDateTime dataCriacao;
 	
 	public TopicoDto(Topico topico) {
 		this.id = topico.getId();
-		this.mensagem = topico.getMensagem();
 		this.titulo = topico.getTitulo();
+		this.mensagem = topico.getMensagem();
 		this.dataCriacao = topico.getDataCriacao();
 	}
 
