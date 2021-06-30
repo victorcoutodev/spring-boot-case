@@ -23,9 +23,7 @@ public class AtualizarTopicoForm {
 	private String mensagem;
 	
 	
-	public Topico atualizar(Long id, TopicoRepository topicoRepository) {
-		Optional<Topico> topicoById = topicoRepository.findById(id);
-		Topico topico = topicoById.get();
+	public Topico atualizar(Topico topico) {
 		
 		topico.setMensagem(this.mensagem);
 		topico.setTitulo(this.titulo);
