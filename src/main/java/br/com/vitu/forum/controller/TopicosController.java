@@ -43,9 +43,7 @@ public class TopicosController {
 	private CursoRepository cursoRepository;
 	
 	@GetMapping
-	public Page<TopicoDto> listar(@RequestParam(required = false) String nomeCurso,@RequestParam int pagina,@RequestParam int qtd){
-		
-		Pageable pageable = PageRequest.of(pagina, qtd);
+	public Page<TopicoDto> listar(@RequestParam(required = false) String nomeCurso, Pageable pageable){
 		
 		if(nomeCurso == null) {
 			Page<Topico> topicos = topicoRepository.findAll(pageable);
