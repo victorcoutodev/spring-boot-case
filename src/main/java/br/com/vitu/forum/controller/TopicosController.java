@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +45,7 @@ public class TopicosController {
 	private CursoRepository cursoRepository;
 	
 	@GetMapping
+	@Cacheable(value = "ListaDeTopicos")
 	public Page<TopicoDto> listar(@RequestParam(required = false) String nomeCurso, Pageable pageable){
 		
 		if(nomeCurso == null) {
@@ -56,6 +59,7 @@ public class TopicosController {
 	
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "ListaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriComponentsBuilder) {
 		Topico topico = form.converter(cursoRepository);
 		topicoRepository.save(topico);
